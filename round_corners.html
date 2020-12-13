@@ -1,0 +1,56 @@
+<style>
+.player{
+    width: 350px;
+    border-radius: 10px; 
+    overflow: hidden; 
+}
+</style>
+
+
+<div class="player">
+	
+    <video id="player" controls autoplay></video>
+    <button id="start">Start Video</button>
+    <button id="stop">Stop Video</button>
+    <button id="capture">Capture</button>
+    <canvas id="canvas" width=320 height=240></canvas>
+<script>
+  const player = document.getElementById('player');
+  const startVideo = document.getElementById('start');
+  const stopVideo = document.getElementById('stop');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  const captureButton = document.getElementById('capture');
+
+  const constraints = {
+    video: true,
+    audio: true,
+  };
+
+  startVideo.addEventListener("click", start, false);
+    function start(){
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      player.srcObject = stream;
+    });
+  }
+  stopVideo.addEventListener("click", stop, false);
+    function stop(e) {
+      var stream = player.srcObject;
+      stream.getTracks().forEach(function(track) {
+  track.stop();
+});
+
+      player.srcObject = null;
+    };  
+      
+  
+  captureButton.addEventListener('click', () => {
+    // Draw the video frame to the canvas.
+    context.drawImage(player, 0, 0, canvas.width, canvas.height);
+  });
+
+  // Attach the video stream to the video element and autoplay.
+
+</script>
+</div
